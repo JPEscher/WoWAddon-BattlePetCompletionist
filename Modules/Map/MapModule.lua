@@ -27,6 +27,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale(addonName .. "_Map")
 MapModule.WorldMapDataProvider = CreateFromMixins(MapCanvasDataProviderMixin)
 
 function MapModule.WorldMapDataProvider:OnCanvasScaleChanged()
+    if InCombatLockdown() then return end
     local map = self:GetMap()
     if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then if issecretvalue(map) then return end end
 
@@ -50,6 +51,7 @@ function MapModule.WorldMapDataProvider:RemoveAllData()
 end
 
 function MapModule.WorldMapDataProvider:RefreshAllData()
+    if InCombatLockdown() then return end
     if not self:GetMap() then
         return
     end
@@ -166,6 +168,7 @@ function BattlePetCompletionistWorldMapPinMixin:OnAcquired(x, y, iconpath)
 end
 
 function BattlePetCompletionistWorldMapPinMixin:ShowPinTooltip()
+    if InCombatLockdown() then return end
     if not self:IsMouseOver() then
         return
     end
@@ -203,6 +206,7 @@ end
 function BattlePetCompletionistWorldMapPinMixin:OnMouseEnter()
     -- Defer to the next frame to break the taint chain between addon code
     -- and Blizzard's tooltip/MoneyFrame rendering (see issue #134).
+    if InCombatLockdown() then return end
     C_Timer.After(0, function() self:ShowPinTooltip() end)
 end
 
@@ -211,6 +215,7 @@ function BattlePetCompletionistWorldMapPinMixin:OnMouseLeave()
 end
 
 function BattlePetCompletionistWorldMapPinMixin:OnMouseClickAction(button)
+    if InCombatLockdown() then return end
     if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then if issecretvalue(button) then return end end
     if button ~= "LeftButton" then
         return
