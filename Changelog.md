@@ -1,3 +1,6 @@
+# 12.1.0-20260825-1
+* Added "A Stack of Snacks" to activity tracker, provided by JPEscher on github.
+
 # 12.1.0-20260819-1
 * Minor tweaks to the activity tracker.
 
