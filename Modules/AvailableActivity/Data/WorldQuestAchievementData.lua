@@ -46,16 +46,19 @@ local BattlePetCompletionist = LibStub("AceAddon-3.0"):GetAddon(addonName)
 local DataModule = BattlePetCompletionist:GetModule("DataModule")
 
 DataModule.ActivitiesData.worldQuestAchievementPetData = {
-    [40869] = { -- Worm Theory
-        petReward = { { petNpcID = 222583, petSpeciesID = 4500, } }, -- Lil' Bonechewer
-    },
-    [40088] = { -- A Champion's Tour: The War Within
-        petReward = { { petNpcID = 223859, petSpeciesID = 4581, } }, -- Ruby-Eyed Stagshell
-    },
     [5449] = { -- Rock Lover
         petReward = { { petNpcID = 45247, petSpeciesID = 265, } } -- Pebble
     },
     [9069] = { -- An Awfully Big Adventure
         petReward = { { petNpcID = 88830, petSpeciesID = 1605, } }, -- Trunks
+    },
+    [40088] = { -- A Champion's Tour: The War Within
+        petReward = { { petNpcID = 223859, petSpeciesID = 4581, } }, -- Ruby-Eyed Stagshell
+    },
+    [40869] = { -- Worm Theory
+        petReward = { { petNpcID = 222583, petSpeciesID = 4500, } }, -- Lil' Bonechewer
+    },
+    [63633] = { -- A Stack of Snacks
+        petReward = { { petNpcID = 270857, petSpeciesID = 5131, } }, -- Ki'clak
     },
 }
