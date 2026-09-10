@@ -1,3 +1,6 @@
+# 12.1.0-20260910-1
+* Fix Maw Buff corruption issue, provided by JPEscher on github.
+
 # 12.1.0-20260825-1
 * Added "A Stack of Snacks" to activity tracker, provided by JPEscher on github.
 

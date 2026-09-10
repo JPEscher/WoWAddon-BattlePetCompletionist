@@ -37,6 +37,11 @@ end
 -- This allows skipping updates when nothing we care about has changed, improving CPU usage.
 -- This function fires an event if the resolved zone has changed, and returns the current zone's map ID.
 function ZoneModule:ResolveZone()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking in delves, dungeons & raids due to combat lockdown.
+    if InCombatLockdown() then
+        return
+    end
+
     -- If we wanted to exclude certain sub-zones from being eligible for selection, we could do so using data from
     -- C_Map.GetMapInfo, such as parentMapID.  However, this appears sufficient for now.
     local mapID = C_Map.GetBestMapForUnit("player")
