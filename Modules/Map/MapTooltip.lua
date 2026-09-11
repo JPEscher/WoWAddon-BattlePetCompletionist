@@ -36,6 +36,7 @@ do
     -- Cache font properties at load time to avoid calling GetFont() during
     -- tainted execution (which can return SECRET values in WoW 11.x).
     local function EnsureFontCached()
+        if InCombatLockdown() then return end
         if not cachedFontFile then
             cachedFontFile, cachedFontSize, cachedFontFlags = GameFontNormal:GetFont()
             cachedFontSize = cachedFontSize or 12
@@ -154,6 +155,11 @@ do
     end
 
     function MapModule.WrapTextWithColor(color, text)
+        -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+        -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+        if InCombatLockdown() then
+            return ""
+        end
         if issecretvalue and (issecretvalue(color) or issecretvalue(text)) then
             return ""
         end

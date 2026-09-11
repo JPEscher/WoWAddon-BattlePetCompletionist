@@ -82,6 +82,12 @@ function MapModule.WorldMapDataProvider:RefreshAllData()
 end
 
 function MapModule.WorldMapDataProvider:LoadMapData(mapId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return
     end
