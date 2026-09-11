@@ -37,6 +37,12 @@ function BattlePetCompletionistObjectiveTrackerMixin:InitModule()
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:OnEvent(event, ...)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(event) then
         return
     end
@@ -45,6 +51,12 @@ function BattlePetCompletionistObjectiveTrackerMixin:OnEvent(event, ...)
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:OnBlockHeaderClick(block, mouseButton)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(block) or issecretvalue(mouseButton)) then
         return
     end
@@ -59,6 +71,12 @@ function BattlePetCompletionistObjectiveTrackerMixin:OnBlockHeaderClick(block, m
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:LayoutContents()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     local filteredPets, mapID = ObjectiveTrackerModule:GetFilteredPetList()
 
     if issecretvalue and (issecretvalue(filteredPets) or issecretvalue(mapID)) then
@@ -88,6 +106,12 @@ function BattlePetCompletionistObjectiveTrackerMixin:LayoutContents()
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:AddBattlePet(block, petInfo)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(petInfo) or issecretvalue(block)) then
         return
     end
@@ -148,6 +172,12 @@ do
     end
 
     function ObjectiveTrackerModule:OnPetEvent(event, ...)
+        -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+        -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+        if InCombatLockdown() then
+            return
+        end
+
         if issecretvalue and issecretvalue(event) then
             return
         end

@@ -25,6 +25,12 @@ local ZoneModule = BattlePetCompletionist:GetModule("ZoneModule")
 
 -- Sorts by speciesName alphabetically, falling back to speciesId for unnamed entries.
 local function ComparePetsByName(a, b)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(a) or issecretvalue(b)) then
         return false
     end
@@ -43,6 +49,12 @@ end
 -- Build the sorted, filtered pet list for the current zone.
 -- Returns filteredPets, mapID or nil when nothing should be displayed.
 function ObjectiveTrackerModule:GetFilteredPetList()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return nil
+    end
+
     local profile = DBModule:GetProfile()
     if not profile.objectiveTrackerEnabled then
         return nil
