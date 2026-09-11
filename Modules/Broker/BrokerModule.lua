@@ -85,6 +85,10 @@ function BrokerModule:OnInitialize()
 end
 
 function BrokerModule:QualityToColorCode(quality)
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(quality) then
         return ""
     end
@@ -97,6 +101,10 @@ function BrokerModule:QualityToColorCode(quality)
 end
 
 function BrokerModule:TooltipToSourceTypeIcon(speciesId)
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return ""
     end
@@ -108,6 +116,10 @@ end
 
 -- Also used by AddonCompartmentModule
 function BrokerModule:OnTooltipShow(tooltip, includeDetails)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(tooltip) or issecretvalue(includeDetails)) then
         return
     end
@@ -168,6 +180,10 @@ end
 
 -- Also used by AddonCompartmentModule
 function BrokerModule:OnClick(button)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(button) then
         return
     end
@@ -199,6 +215,10 @@ local goalSuffixes = {
 }
 
 function BrokerModule:GetSuffixForGoal(goal)
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(goal) then
         return ""
     end
@@ -207,6 +227,10 @@ function BrokerModule:GetSuffixForGoal(goal)
 end
 
 function BrokerModule:MetGoal(goal, numCollected, numRareCollected, limit)
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(goal) or issecretvalue(numCollected) or issecretvalue(numRareCollected) or issecretvalue(limit)) then
         return false
     end
@@ -225,6 +249,10 @@ function BrokerModule:MetGoal(goal, numCollected, numRareCollected, limit)
 end
 
 function BrokerModule:GetNumCollectedInfo(speciesId)
+    if InCombatLockdown() then
+        return 0, 0, 0
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return 0, 0, 0
     end

@@ -34,7 +34,9 @@ function TooltipModule:OnEnable()
 end
 
 function TooltipModule.ModifyPetTip(speciesID)
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
 
     if issecretvalue and issecretvalue(speciesID) then
         return

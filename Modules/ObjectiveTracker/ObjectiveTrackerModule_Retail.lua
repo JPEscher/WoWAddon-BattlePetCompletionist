@@ -37,6 +37,10 @@ function BattlePetCompletionistObjectiveTrackerMixin:InitModule()
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:OnEvent(event, ...)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(event) then
         return
     end
@@ -45,6 +49,10 @@ function BattlePetCompletionistObjectiveTrackerMixin:OnEvent(event, ...)
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:OnBlockHeaderClick(block, mouseButton)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(block) or issecretvalue(mouseButton)) then
         return
     end
@@ -59,6 +67,10 @@ function BattlePetCompletionistObjectiveTrackerMixin:OnBlockHeaderClick(block, m
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:LayoutContents()
+    if InCombatLockdown() then
+        return
+    end
+
     local filteredPets, mapID = ObjectiveTrackerModule:GetFilteredPetList()
 
     if issecretvalue and (issecretvalue(filteredPets) or issecretvalue(mapID)) then
@@ -88,6 +100,10 @@ function BattlePetCompletionistObjectiveTrackerMixin:LayoutContents()
 end
 
 function BattlePetCompletionistObjectiveTrackerMixin:AddBattlePet(block, petInfo)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(petInfo) or issecretvalue(block)) then
         return
     end
@@ -148,6 +164,10 @@ do
     end
 
     function ObjectiveTrackerModule:OnPetEvent(event, ...)
+        if InCombatLockdown() then
+            return
+        end
+
         if issecretvalue and issecretvalue(event) then
             return
         end

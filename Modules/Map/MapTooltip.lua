@@ -36,6 +36,10 @@ do
     -- Cache font properties at load time to avoid calling GetFont() during
     -- tainted execution (which can return SECRET values in WoW 11.x).
     local function EnsureFontCached()
+        if InCombatLockdown() then
+            return
+        end
+
         if not cachedFontFile then
             cachedFontFile, cachedFontSize, cachedFontFlags = GameFontNormal:GetFont()
             cachedFontSize = cachedFontSize or 12
@@ -43,7 +47,9 @@ do
     end
 
     function MapModule.Tooltip_Show(anchor, headerLine, collectedLine, sourceLine)
-        if InCombatLockdown() then return end
+        if InCombatLockdown() then
+            return
+        end
 
         if issecretvalue and (issecretvalue(anchor) or issecretvalue(headerLine) or issecretvalue(collectedLine) or issecretvalue(sourceLine)) then
             return
@@ -154,6 +160,9 @@ do
     end
 
     function MapModule.WrapTextWithColor(color, text)
+        if InCombatLockdown() then
+            return ""
+        end
         if issecretvalue and (issecretvalue(color) or issecretvalue(text)) then
             return ""
         end
