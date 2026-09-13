@@ -105,6 +105,12 @@ function MapModule.WorldMapDataProvider:LoadMapData(mapId)
     end
 
     local function IsTooCloseToExistingPin(placedPositions, x, y, threshold)
+        -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+        -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+        if InCombatLockdown() then
+            return false
+        end
+
         if issecretvalue and (issecretvalue(x) or issecretvalue(y) or issecretvalue(threshold)) then
             return false
         end
@@ -127,6 +133,12 @@ function MapModule.WorldMapDataProvider:LoadMapData(mapId)
     end
 
     local function GetMapZoomPercent(map)
+        -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+        -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+        if InCombatLockdown() then
+            return 0
+        end
+
         if issecretvalue and issecretvalue(map) then
             return 0
         end
@@ -183,6 +195,12 @@ function BattlePetCompletionistWorldMapPinMixin:OnLoad()
 end
 
 function BattlePetCompletionistWorldMapPinMixin:OnAcquired(x, y, iconpath)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     self:SetPosition(x, y)
     MapModule.WorldMapDataProvider:SetupPinAppearance(self, iconpath)
     self:SetAlpha(1)
@@ -287,14 +305,32 @@ function BattlePetCompletionistWorldMapPinMixin:OnMouseClickAction(button)
 end
 
 function MapModule:UpdateWorldMap()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     MapModule.WorldMapDataProvider:RefreshAllData()
 end
 
 function MapModule:BattlePetToggle_GetStatus()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     return DBModule:GetProfile().mapPinsToInclude ~= _BattlePetCompletionist.Enums.MapPinFilter.NONE
 end
 
 function MapModule:BattlePetToggle_OnClick()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     local profile = DBModule:GetProfile()
 
     if profile.mapPinsToInclude == _BattlePetCompletionist.Enums.MapPinFilter.NONE then
