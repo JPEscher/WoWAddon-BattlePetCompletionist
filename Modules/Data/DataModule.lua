@@ -49,6 +49,12 @@ function DataModule:GetActivitiesData()
 end
 
 local function DoesPetMatchSourceFilters(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return false
     end
@@ -73,6 +79,12 @@ local function DoesPetMatchSourceFilters(speciesId)
 end
 
 local function GetMapZoneNames(mapId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return {}
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return {}
     end
@@ -110,6 +122,12 @@ local function GetMapZoneNames(mapId)
 end
 
 local function IsPetInMapZone(speciesId, mapZoneNames)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(speciesId) or issecretvalue(mapZoneNames)) then
         return false
     end
@@ -150,6 +168,12 @@ local function IsPetInMapZone(speciesId, mapZoneNames)
 end
 
 function DataModule:GetPetsInMap(mapId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return
     end
@@ -177,6 +201,12 @@ function DataModule:GetPetsInMap(mapId)
 end
 
 function DataModule:ShouldPetBeShown(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return false
     end
@@ -271,6 +301,12 @@ function DataModule:ShouldPetBeShown(speciesId)
 end
 
 function DataModule:GetOwnedPets(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return
     end
@@ -305,6 +341,12 @@ function DataModule:GetOwnedPets(speciesId)
 end
 
 function DataModule:GetEnemyPetsInBattle()
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return {}, {}
+    end
+
     local numberOfEnemyPets = C_PetBattles.GetNumPets(Enum.BattlePetOwner.Enemy)
 
     if issecretvalue and issecretvalue(numberOfEnemyPets) then

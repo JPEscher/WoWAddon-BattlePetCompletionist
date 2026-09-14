@@ -193,6 +193,12 @@ function GoalTrackerModule:GetZonePetData()
 end
 
 function GoalTrackerModule:TooltipToSourceTypeIcon(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return ""
     end
