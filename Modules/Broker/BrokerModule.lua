@@ -85,6 +85,12 @@ function BrokerModule:OnInitialize()
 end
 
 function BrokerModule:QualityToColorCode(quality)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(quality) then
         return ""
     end
@@ -97,6 +103,12 @@ function BrokerModule:QualityToColorCode(quality)
 end
 
 function BrokerModule:TooltipToSourceTypeIcon(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return ""
     end
@@ -108,6 +120,12 @@ end
 
 -- Also used by AddonCompartmentModule
 function BrokerModule:OnTooltipShow(tooltip, includeDetails)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and (issecretvalue(tooltip) or issecretvalue(includeDetails)) then
         return
     end
@@ -168,6 +186,12 @@ end
 
 -- Also used by AddonCompartmentModule
 function BrokerModule:OnClick(button)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(button) then
         return
     end
@@ -199,6 +223,12 @@ local goalSuffixes = {
 }
 
 function BrokerModule:GetSuffixForGoal(goal)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(goal) then
         return ""
     end
@@ -207,6 +237,12 @@ function BrokerModule:GetSuffixForGoal(goal)
 end
 
 function BrokerModule:MetGoal(goal, numCollected, numRareCollected, limit)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(goal) or issecretvalue(numCollected) or issecretvalue(numRareCollected) or issecretvalue(limit)) then
         return false
     end
@@ -225,6 +261,12 @@ function BrokerModule:MetGoal(goal, numCollected, numRareCollected, limit)
 end
 
 function BrokerModule:GetNumCollectedInfo(speciesId)
+    -- As of 12.1 blizzard added an issue with their maw buffs that can trigger from map checking due to combat lockdown.
+    -- This is most commonly seen in Delves, Dungeons & Raids, but can be seen in World Events such as "Saltheril's Soiree" too.
+    if InCombatLockdown() then
+        return 0, 0, 0
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return 0, 0, 0
     end
