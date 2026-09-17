@@ -49,6 +49,10 @@ function DataModule:GetActivitiesData()
 end
 
 local function DoesPetMatchSourceFilters(speciesId)
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return false
     end
@@ -73,6 +77,10 @@ local function DoesPetMatchSourceFilters(speciesId)
 end
 
 local function GetMapZoneNames(mapId)
+    if InCombatLockdown() then
+        return {}
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return {}
     end
@@ -110,6 +118,10 @@ local function GetMapZoneNames(mapId)
 end
 
 local function IsPetInMapZone(speciesId, mapZoneNames)
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(speciesId) or issecretvalue(mapZoneNames)) then
         return false
     end
@@ -150,6 +162,10 @@ local function IsPetInMapZone(speciesId, mapZoneNames)
 end
 
 function DataModule:GetPetsInMap(mapId)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return
     end
@@ -177,6 +193,10 @@ function DataModule:GetPetsInMap(mapId)
 end
 
 function DataModule:ShouldPetBeShown(speciesId)
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return false
     end
@@ -271,6 +291,10 @@ function DataModule:ShouldPetBeShown(speciesId)
 end
 
 function DataModule:GetOwnedPets(speciesId)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return
     end
@@ -305,6 +329,10 @@ function DataModule:GetOwnedPets(speciesId)
 end
 
 function DataModule:GetEnemyPetsInBattle()
+    if InCombatLockdown() then
+        return {}, {}
+    end
+
     local numberOfEnemyPets = C_PetBattles.GetNumPets(Enum.BattlePetOwner.Enemy)
 
     if issecretvalue and issecretvalue(numberOfEnemyPets) then

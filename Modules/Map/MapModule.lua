@@ -27,7 +27,10 @@ local L = LibStub("AceLocale-3.0"):GetLocale(addonName .. "_Map")
 MapModule.WorldMapDataProvider = CreateFromMixins(MapCanvasDataProviderMixin)
 
 function MapModule.WorldMapDataProvider:OnCanvasScaleChanged()
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
+
     local map = self:GetMap()
 
     if issecretvalue and issecretvalue(map) then
@@ -54,7 +57,10 @@ function MapModule.WorldMapDataProvider:RemoveAllData()
 end
 
 function MapModule.WorldMapDataProvider:RefreshAllData()
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
+
     if not self:GetMap() then
         return
     end
@@ -82,6 +88,10 @@ function MapModule.WorldMapDataProvider:RefreshAllData()
 end
 
 function MapModule.WorldMapDataProvider:LoadMapData(mapId)
+    if InCombatLockdown() then
+        return
+    end
+
     if issecretvalue and issecretvalue(mapId) then
         return
     end
@@ -99,6 +109,10 @@ function MapModule.WorldMapDataProvider:LoadMapData(mapId)
     end
 
     local function IsTooCloseToExistingPin(placedPositions, x, y, threshold)
+        if InCombatLockdown() then
+            return false
+        end
+
         if issecretvalue and (issecretvalue(x) or issecretvalue(y) or issecretvalue(threshold)) then
             return false
         end
@@ -121,6 +135,10 @@ function MapModule.WorldMapDataProvider:LoadMapData(mapId)
     end
 
     local function GetMapZoomPercent(map)
+        if InCombatLockdown() then
+            return 0
+        end
+
         if issecretvalue and issecretvalue(map) then
             return 0
         end
@@ -177,6 +195,10 @@ function BattlePetCompletionistWorldMapPinMixin:OnLoad()
 end
 
 function BattlePetCompletionistWorldMapPinMixin:OnAcquired(x, y, iconpath)
+    if InCombatLockdown() then
+        return
+    end
+
     self:SetPosition(x, y)
     MapModule.WorldMapDataProvider:SetupPinAppearance(self, iconpath)
     self:SetAlpha(1)
@@ -184,7 +206,10 @@ function BattlePetCompletionistWorldMapPinMixin:OnAcquired(x, y, iconpath)
 end
 
 function BattlePetCompletionistWorldMapPinMixin:ShowPinTooltip()
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
+
     if not self:IsMouseOver() then
         return
     end
@@ -225,7 +250,10 @@ end
 function BattlePetCompletionistWorldMapPinMixin:OnMouseEnter()
     -- Defer to the next frame to break the taint chain between addon code
     -- and Blizzard's tooltip/MoneyFrame rendering (see issue #134).
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
+
     C_Timer.After(0, function() self:ShowPinTooltip() end)
 end
 
@@ -234,7 +262,9 @@ function BattlePetCompletionistWorldMapPinMixin:OnMouseLeave()
 end
 
 function BattlePetCompletionistWorldMapPinMixin:OnMouseClickAction(button)
-    if InCombatLockdown() then return end
+    if InCombatLockdown() then
+        return
+    end
 
     if issecretvalue and issecretvalue(button) then
         return
@@ -281,14 +311,26 @@ function BattlePetCompletionistWorldMapPinMixin:OnMouseClickAction(button)
 end
 
 function MapModule:UpdateWorldMap()
+    if InCombatLockdown() then
+        return
+    end
+
     MapModule.WorldMapDataProvider:RefreshAllData()
 end
 
 function MapModule:BattlePetToggle_GetStatus()
+    if InCombatLockdown() then
+        return
+    end
+
     return DBModule:GetProfile().mapPinsToInclude ~= _BattlePetCompletionist.Enums.MapPinFilter.NONE
 end
 
 function MapModule:BattlePetToggle_OnClick()
+    if InCombatLockdown() then
+        return
+    end
+
     local profile = DBModule:GetProfile()
 
     if profile.mapPinsToInclude == _BattlePetCompletionist.Enums.MapPinFilter.NONE then

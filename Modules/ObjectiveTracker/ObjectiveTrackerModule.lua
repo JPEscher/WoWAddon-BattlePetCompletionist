@@ -25,6 +25,10 @@ local ZoneModule = BattlePetCompletionist:GetModule("ZoneModule")
 
 -- Sorts by speciesName alphabetically, falling back to speciesId for unnamed entries.
 local function ComparePetsByName(a, b)
+    if InCombatLockdown() then
+        return false
+    end
+
     if issecretvalue and (issecretvalue(a) or issecretvalue(b)) then
         return false
     end
@@ -43,6 +47,10 @@ end
 -- Build the sorted, filtered pet list for the current zone.
 -- Returns filteredPets, mapID or nil when nothing should be displayed.
 function ObjectiveTrackerModule:GetFilteredPetList()
+    if InCombatLockdown() then
+        return nil
+    end
+
     local profile = DBModule:GetProfile()
     if not profile.objectiveTrackerEnabled then
         return nil

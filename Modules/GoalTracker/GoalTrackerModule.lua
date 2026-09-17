@@ -193,6 +193,10 @@ function GoalTrackerModule:GetZonePetData()
 end
 
 function GoalTrackerModule:TooltipToSourceTypeIcon(speciesId)
+    if InCombatLockdown() then
+        return ""
+    end
+
     if issecretvalue and issecretvalue(speciesId) then
         return ""
     end

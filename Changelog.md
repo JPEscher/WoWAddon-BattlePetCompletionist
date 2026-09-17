@@ -1,3 +1,6 @@
+# 12.1.0-20260917-1
+* Add InCombatLockdown checks to prevent Maw Buff corruption issue, provided by JPEscher on github.
+
 # 12.1.0-20260910-1
 * Fix Maw Buff corruption issue, provided by JPEscher on github.
 
