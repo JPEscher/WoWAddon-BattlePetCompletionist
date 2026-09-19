@@ -29,7 +29,7 @@ function CaptureModule:OnEnable()
 end
 
 function CaptureModule:BattleHasStarted()
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -80,7 +80,7 @@ end
 local _rows = { "Row1", "Row2", "Row3" }
 
 function CaptureModule:CreatePetsDialog(pets, mode)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 

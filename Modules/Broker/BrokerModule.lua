@@ -31,10 +31,18 @@ local L = LibStub("AceLocale-3.0"):GetLocale(addonName .. "_Broker")
 
 -- Also used by MinimapModule
 function BrokerModule:GetDataObject()
+    if InCombatLockdown() then
+        return
+    end
+
     return self.dataSource
 end
 
 function BrokerModule:RefreshData()
+    if InCombatLockdown() then
+        return
+    end
+
     local count = 0
     local totalCount = 0
     local petData = self:GetZonePetData()

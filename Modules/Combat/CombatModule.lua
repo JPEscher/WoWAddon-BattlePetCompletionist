@@ -54,7 +54,7 @@ function CombatModule:OnEnable()
 end
 
 local function CanWeFindPlayerPosition()
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return false
     end
 
@@ -79,7 +79,7 @@ local function CanWeFindPlayerPosition()
 end
 
 function CombatModule:BattleHasStarted()
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -98,7 +98,7 @@ function CombatModule:BattleHasStarted()
 end
 
 function CombatModule:HafBattleHasStarted()
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -139,7 +139,7 @@ local thresholdValues = {
 }
 
 function CombatModule:ForfeitBattleHasStarted()
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -235,7 +235,7 @@ function CombatModule:ForfeitBattleHasStarted()
 end
 
 function CombatModule:HaFOnReceivedAnnounce(_, msg, _, sender)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -271,7 +271,7 @@ function CombatModule:HaFOnReceivedAnnounce(_, msg, _, sender)
 end
 
 function CombatModule:HaFOnReceivedINeedPets(_, msg, _, sender)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -340,7 +340,7 @@ function CombatModule:HaFOnReceivedINeedPets(_, msg, _, sender)
 end
 
 function CombatModule:HaFOnReceivedOfferPets(_, msg, _, sender)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -395,7 +395,7 @@ function CombatModule:HaFOnReceivedOfferPets(_, msg, _, sender)
 end
 
 function CombatModule:HaFOnReceivedAcceptOffer(_, msg, _, sender)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
@@ -424,7 +424,7 @@ function CombatModule:HaFOnReceivedAcceptOffer(_, msg, _, sender)
 end
 
 function CombatModule:HaFOnReceivedDeclineOffer(_, msg, _, sender)
-    if not InCombatLockdown() then
+    if InCombatLockdown() then
         return
     end
 
