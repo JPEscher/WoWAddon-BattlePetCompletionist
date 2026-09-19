@@ -64,6 +64,10 @@ end
 -- Get the pets in the current zone.
 -- The map determination logic may skip some changes to improve CPU usage.
 function BrokerModule:GetZonePetData()
+    if InCombatLockdown() then
+        return {}
+    end
+
     local mapID = ZoneModule:ResolveZone()
     return DataModule:GetPetsInMap(mapID) or {}
 end
@@ -196,6 +200,11 @@ function BrokerModule:OnClick(button)
 end
 
 function BrokerModule:ToggleConfig()
+    if InCombatLockdown() then
+        self:Print(L["This cannot be used while in combat."])
+        return 
+    end
+
     local optionsFrame = ConfigModule.OptionsFrame
     local categoryId = ConfigModule.CategoryId
     if optionsFrame then
