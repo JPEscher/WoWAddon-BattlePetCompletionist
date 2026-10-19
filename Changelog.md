@@ -1,3 +1,6 @@
+# 12.1.5-202610??-1
+* A big thank you to Remte (Discord Name) from WarCraftPets Discord! The data dump is appreciated! A large number of additions by JPEscher (Noctusmirus, Proudmoore, US). Full List of additions here: https://github.com/GurliGebis/WoWAddon-BattlePetCompletionist/pull/176
+
 # 12.1.5-20261014-1
 * Updated Retail TOC to match 12.1.5
 
