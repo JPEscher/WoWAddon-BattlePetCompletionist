@@ -528,6 +528,33 @@ function AvailableActivityModule:BuildCovenantQuestList(dataSource)
     return results
 end
 
+function AvailableActivityModule:BuildParagonEventActivityList(dataSource)
+    if InCombatLockdown() then
+        return
+    end
+
+    local results = {}
+
+    for repID, repData in pairs(dataSource) do
+        repInfo = C_Reputation.GetFactionDataByID(repID)
+        if issecretvalue(repInfo) then
+            repInfo = nil
+        end
+
+	    if repInfo ~= nil then
+            local title = repInfo.name
+            local links = AvailableActivityModule:GetPetData(repData.pets)
+            local entry = AvailableActivityModule:BuildActivityEntry("Paragon Reputations", title, links)
+
+            if entry then
+                table.insert(results, entry)
+            end
+        end
+    end
+
+    return results
+end
+
 function AvailableActivityModule:BuildDailyQuestList(dataSource)
     if InCombatLockdown() then
         return
@@ -755,6 +782,7 @@ function AvailableActivityModule:CreateDataObject()
         dailyQuestPetAchievementEvents = AvailableActivityModule:BuildDailyQuestAchievementList(activitiesData.dailyQuestAchievementPetData, activitiesData.criteriaToQuestMap),
         dailyQuestPetEvents            = AvailableActivityModule:BuildDailyQuestList(activitiesData.dailyQuestPetData),
         islandPetEvents                = AvailableActivityModule:BuildIslandQuestList(activitiesData.islandPetData),
+        paragonPetEvents               = AvailableActivityModule:BuildParagonEventActivityList(activitiesData.paragonPetData),
         worldQuestPetAchievementEvents = AvailableActivityModule:BuildWorldQuestAchievementList(activitiesData.worldQuestAchievementPetData, activitiesData.criteriaToQuestMap),
         worldQuestPetEvents            = AvailableActivityModule:BuildWorldQuestList(activitiesData.worldQuestPetData),
     }
@@ -775,6 +803,7 @@ function AvailableActivityModule:DisplayActivityWindow(dataObject)
         dailyQuestPetAchievementEvents = { { category = category, subcategory = subcategory, title = title, pets = petLinks } }
         dailyQuestPetEvents            = { { category = category, title = title, pets = petLinks } }
         islandPetEvents                = { { category = category, title = title, pets = petLinks } }
+        paragonPetEvents               = { { category = category, title = title, pets = petLinks } }
         worldQuestPetAchievementEvents = { { category = category, subcategory = subcategory, title = title, pets = petLinks } }
         worldQuestPetEvents            = { { category = category, title = title, pets = petLinks } }
     }
