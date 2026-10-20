@@ -328,6 +328,93 @@ function AvailableActivityModule:SeasonalPets()
     return seasonal
 end
 
+function AvailableActivityModule:BuildTimedZoneEventActivityList(dataSource)
+    if InCombatLockdown() then
+        return
+    end
+
+    local results = {}
+
+    for mapID, eventData in pairs(dataSource) do
+        if eventData.requireTimer then
+            inactiveZone = AvailableActivityModule:InactiveZoneCheck(mapID)
+
+            for zoneName, eventZone in pairs(eventData.events) do
+                if inactiveZone ~= eventZone.mapZone then
+                    local title = zoneName
+                    local links = AvailableActivityModule:GetPetData(eventZone.pets)
+                    local entry = AvailableActivityModule:BuildActivityEntry("Timed Zone Event Rares", title, links)
+
+                    if entry then
+                        table.insert(results, entry)
+                    end
+                end
+            end
+        else
+            local mapQuests = C_TaskQuest.GetQuestsOnMap(mapID) -- fails if old zone is active!
+            if issecretvalue(mapQuests) then
+                return results
+            end
+
+            if AvailableActivityModule:tableSize(mapQuests) == 0 then
+                local linkTitle = L["Ensure you have the current "] .. C_Map.GetMapInfo(mapID).name .. L[" open & active. Check with"] .. " Zidormi."
+                local links = { { petSpeciesID = nil, petName = nil, linkType = nil,
+    linkValue = "\124cff0070dd\124Hitem:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0\124h[" .. linkTitle .. "]\124h\124r"
+                    } }
+                local entry = AvailableActivityModule:BuildActivityEntry("Timed Zone Event Rares", L["Are you a Time Traveler?"], links)
+                table.insert(results, entry)
+            else
+                for _, questData in ipairs(mapQuests) do
+                    local activity = nil
+                    activity = eventData.events[questData.questID]
+                    if activity ~= nil then
+                        local title = AvailableActivityModule:GetQuestTitle(questData.questID)
+                        local links = AvailableActivityModule:GetPetData(activity.pets)
+                        local entry = AvailableActivityModule:BuildActivityEntry("Timed Zone Event Rares", title, links)
+
+                        if entry then
+                            table.insert(results, entry)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return results
+end
+
+function AvailableActivityModule:InactiveZoneCheck(MapID)
+    if InCombatLockdown() then
+        return
+    end
+
+    local serverTime = (C_DateAndTime.GetServerTimeLocal() + C_DateAndTime.GetSecondsUntilDailyReset())
+    if issecretvalue(serverTime) then
+        return
+    end
+
+    local modMe = floor(serverTime/86400)
+
+    local locations = {
+        [1469] = { 1, 2, },
+	    [2133] = { 1, 2, 3, 4, }
+    }
+
+    local checkme = locations[MapID]
+    local modBy = #checkme
+    local inactiveID = checkme[(modMe%modBy)+1]
+
+    if MapID == 1469 then
+        inactiveID = 1
+        if C_TaskQuest.IsActive(57157) then
+            inactiveID = 2
+        end
+    end
+
+    return inactiveID
+end
+
 function AvailableActivityModule:MicroHolidays()
     if InCombatLockdown() then
         return
@@ -783,6 +870,7 @@ function AvailableActivityModule:CreateDataObject()
         dailyQuestPetEvents            = AvailableActivityModule:BuildDailyQuestList(activitiesData.dailyQuestPetData),
         islandPetEvents                = AvailableActivityModule:BuildIslandQuestList(activitiesData.islandPetData),
         paragonPetEvents               = AvailableActivityModule:BuildParagonEventActivityList(activitiesData.paragonPetData),
+        timedZonePetEvents             = AvailableActivityModule:BuildTimedZoneEventActivityList(activitiesData.TimedZoneActivityPetData),
         worldQuestPetAchievementEvents = AvailableActivityModule:BuildWorldQuestAchievementList(activitiesData.worldQuestAchievementPetData, activitiesData.criteriaToQuestMap),
         worldQuestPetEvents            = AvailableActivityModule:BuildWorldQuestList(activitiesData.worldQuestPetData),
     }
@@ -804,6 +892,7 @@ function AvailableActivityModule:DisplayActivityWindow(dataObject)
         dailyQuestPetEvents            = { { category = category, title = title, pets = petLinks } }
         islandPetEvents                = { { category = category, title = title, pets = petLinks } }
         paragonPetEvents               = { { category = category, title = title, pets = petLinks } }
+        timedZonePetEvents             = { { category = category, title = title, pets = petLinks } }
         worldQuestPetAchievementEvents = { { category = category, subcategory = subcategory, title = title, pets = petLinks } }
         worldQuestPetEvents            = { { category = category, title = title, pets = petLinks } }
     }
