@@ -97,12 +97,14 @@ DataModule.ActivitiesData.worldQuestPetData = {
         pets = {
             { petNpcID = 179008, petSpeciesID = 3098 }, -- Lil' Abom, have to craft from Necrolord Assault Items
             { petNpcID = 179171, petSpeciesID = 3114 }, -- Fodder, Random Reward from Necrolord Cache/Chest
+            { petNpcID = 174081, petSpeciesID = 3037 }, -- Dread, Drop from Eternas the Tormentor
         },
     },
-    --[[[63822] = { -- Venthyr Maw Assault
+    [63822] = { -- Venthyr Maw Assault
         pets = {
+            { petNpcID = 174081, petSpeciesID = 3037 }, -- Dread, Drop from Eternas the Tormentor
         },
-    },--]]
+    },
     [63823] = { -- Night Fae Maw Assault
         pets = {
             { petNpcID = 179025, petSpeciesID = 3099 }, -- Infused Etherwyrm, Random Reward from Night Fae Cache/Chest
