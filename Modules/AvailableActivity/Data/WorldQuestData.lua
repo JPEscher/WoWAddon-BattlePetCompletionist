@@ -43,6 +43,11 @@ local BattlePetCompletionist = LibStub("AceAddon-3.0"):GetAddon(addonName)
 local DataModule = BattlePetCompletionist:GetModule("DataModule")
 
 DataModule.ActivitiesData.worldQuestPetData = {
+    [41163] = { -- Quest: Snowfeather Swarm!
+        pets = {
+            { petNpcID = 106232, petSpeciesID = 1887 }, -- Wyrmr Tunkins
+        },
+    },
     [44892] = { -- Quest: Snowfeather Swarm!
         pets = {
             { petNpcID = 115784, petSpeciesID = 1974 }, -- Snowfeather Hatchling
