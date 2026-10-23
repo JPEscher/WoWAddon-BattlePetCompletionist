@@ -3,7 +3,7 @@
 ## Summary
 
 The Available Activity Module (AAM) was a BattlePetCompletionist Feature Request for Retail World of Warcraft being fulfilled. Currently only the Retail WoW is supported. This is due in part to the way Blizzard implements their IDs.
- The event, quest and other IDs are not uniform across versions. Once a version is branched form Retail, the IDs can start being used by the new branch with differnt items attached. Due to this, the AAM was launched with Retail as 
+ The event, quest and other IDs are not uniform across versions. Once a version is branched form Retail, the IDs can start being used by the new branch with different items attached. Due to this, the AAM was launched with Retail as 
 the target. Expanding to other versions is possible, but there is no current timetable.
 
 ## Features
@@ -11,7 +11,13 @@ the target. Expanding to other versions is possible, but there is no current tim
 * Popup Display of Activities when Logging in from the Character Select Screen (Defaults on, may be turned off)
 * On-Demand Loading of the Popup Display; using slash command /bpcom-activities
 
-## Activities Covered
+## Data Notes
+
+  * Fishing Profession quests work in a way that has them left out for now
+  * Data is always changeing for World of Warcraft thanks to Blizzard, feel fee to add upkeep requests [here](https://github.com/GurliGebis/WoWAddon-BattlePetCompletionist/issues).  
+  It is requested that any tickets us the blank format and get tagged "[AAM Update]" as their start.
+
+## The AAM Covers
   * Calendar Based:
     * Brewfest
     * Children's Week
@@ -114,8 +120,3 @@ the target. Expanding to other versions is possible, but there is no current tim
       * Venthyr Maw Assault
       * Waycrest Manor: Witchy Kitchen
       * Worm Theory
-
-## Data Notes
-
-  * Fishing Profession quests work in a way that has them left out for now
-  * Data is always changeing for World of Warcraft thanks to Blizzard, feel fee to add upkeep requests [here](https://github.com/GurliGebis/WoWAddon-BattlePetCompletionist/issues). It is requested that any tickets us the blank format and get tagged "[AAM Update]" as their start.
