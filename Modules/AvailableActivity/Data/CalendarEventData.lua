@@ -220,7 +220,8 @@ DataModule.ActivitiesData.calendarEventPetData = {
         pets = {
             { petNpcID = 67022, petSpeciesID = 1013 }, -- Wanderer's  Festival Hatchling
         },
-    },    -- [1056] = {}, -- Warlords of Draenor; does not currently have pets
+    },
+    -- [1056] = {}, -- Warlords of Draenor; does not currently have pets
     -- [1263] = {}, -- Legion Timewalking; does not currently have pets
     -- [1271] = {}, -- Legion Timewalking; does not currently have pets
     [1508] = { -- Classic (aka Vanilla) Timewalking
