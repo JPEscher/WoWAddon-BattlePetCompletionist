@@ -59,6 +59,11 @@ function AvailableActivityModule:OnInitialize()
 end
 
 function AvailableActivityModule:ShowActivityWindow_OnChatCommand()
+    if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
+        self:Print(L["Module not currently supported in this WoW version."])
+        return
+    end
+
     if InCombatLockdown() then
         self:Print(L["This cannot be used while in combat."])
         return
